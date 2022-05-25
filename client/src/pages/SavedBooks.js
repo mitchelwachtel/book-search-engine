@@ -21,7 +21,9 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = useMutation(REMOVE_BOOK);
+      const response = useMutation(REMOVE_BOOK, {
+        variables: {bookId: bookId}
+      });
 
       if (!response.ok) {
         throw new Error("something went wrong!");
