@@ -19,6 +19,11 @@ const typeDefs = gql`
     savedBooks: [Book]!
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type Query {
     user(userId: ID!): User
   }
@@ -31,6 +36,7 @@ const typeDefs = gql`
   }
 `;
 
+// 
 // deleteBook Mutation needs to remove a specific book from a specific User's book list 
 
 module.exports = typeDefs;
