@@ -26,8 +26,10 @@ const typeDefs = gql`
   type Mutation {
     createUser(username: String!, email: String, password: String): User
     saveBook(userId: ID!): User
-    deleteBook(bookId: ID!): Book
+    deleteBook(userId: ID!, bookId: ID!): User
   }
 `;
+
+// deleteBook Mutation needs to remove a specific book from a specific User's book list 
 
 module.exports = typeDefs;

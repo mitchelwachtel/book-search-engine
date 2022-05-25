@@ -1,23 +1,15 @@
-const {Matchup, Tech} = require("../models");
+const {User} = require("../models");
 
 const resolvers = {
   Query: {
-    matchups: async () => {
-      return Matchup.find({});
-    },
-
-    matchup: async (parent, {matchupId}) => {
-      return Matchup.findOne({_id: matchupId});
-    },
-
-    tech: async () => {
-      return Tech.find({});
+    user: async (parent, {userId}) => {
+      return User.findOne({_id: userId});
     },
   },
 
   Mutation: {
-    addMatchup: async (parent, {tech1, tech2}) => {
-      return Matchup.create({tech1, tech2});
+    createUser: async (parent, {username, email, password}) => {
+      return User.create({username, email, password});
     },
     addVote: async (parent, {matchupId, techNum}) => {
       const vote = Matchup.findOneAndUpdate(
