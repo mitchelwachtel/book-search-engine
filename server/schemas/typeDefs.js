@@ -25,19 +25,18 @@ const typeDefs = gql`
   }
 
   type Query {
-    user(userId: ID!): User
     me: User
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    createUser(username: String!, email: String, password: String): User
+    createUser(username: String!, email: String, password: String): Auth
     saveBook(userId: ID!, authors: [String], description: String, bookId: String, image: String, link: String, title: String): User
-    deleteBook(userId: ID!, bookId: ID!): User
+    removeBook(userId: ID!, bookId: ID!): User
   }
 `;
 
-// 
+// saveBook Look into creating what's known as an input type to handle all of these parameters!
 // deleteBook Mutation needs to remove a specific book from a specific User's book list 
 
 module.exports = typeDefs;
