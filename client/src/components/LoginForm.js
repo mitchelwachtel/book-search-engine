@@ -17,6 +17,9 @@ const LoginForm = () => {
   };
 
   const [loginUser, {error}] = useMutation(LOGIN_USER);
+  if (error) {
+    console.log(error);
+  }
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -37,7 +40,6 @@ const LoginForm = () => {
       //   throw new Error("something went wrong!");
       // }
 
-      
       console.log(data);
       Auth.login(data.data.login.token);
     } catch (err) {
