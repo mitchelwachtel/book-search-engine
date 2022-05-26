@@ -11,10 +11,13 @@ const SavedBooks = () => {
   const profileData = Auth.getProfile();
   const userId = profileData.data._id;
   console.log(userId);
-  const bigData = useQuery(QUERY_ME, {variables: {userId: userId}});
-const data = bigData.data.user
-  console.log(data);
 
+  const userData = useQuery(QUERY_ME, {variables: {userId: userId}});
+  console.log(userData);
+  const data = userData.data || [];
+  const spread = {...data.user};
+
+  console.log(spread.username);
   const [removeBook, {error}] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -42,7 +45,7 @@ const data = bigData.data.user
   };
 
   // if data isn't here yet, say so
-  if (!data.length) {
+  if (!spread.username) {
     return <h2>LOADING...</h2>;
   }
 
@@ -55,14 +58,14 @@ const data = bigData.data.user
       </Jumbotron>
       <Container>
         <h2>
-          {data.savedBooks.length
-            ? `Viewing ${data.savedBooks.length} saved ${
-                data.savedBooks.length === 1 ? "book" : "books"
+          {spread.savedBooks.length
+            ? `Viewing ${spread.savedBooks.length} saved ${
+                spread.savedBooks.length === 1 ? "book" : "books"
               }:`
             : "You have no saved books!"}
         </h2>
         <CardColumns>
-          {data.savedBooks.map((book) => {
+          {spread.savedBooks.map((book) => {
             return (
               <Card key={book.bookId} border="dark">
                 {book.image ? (
