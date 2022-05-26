@@ -33,14 +33,26 @@ Technologies used: MongoDB, React.js, node.js, npm, Express.js, dependencies: 'a
 
 ---
 ### Usage
-This terminal application will give you access to your database so you can manage your employees. You must install dependencies for application to be functional along with updating the sequel connection with your personal database information. To open the application and begin usage, type "node index" into the terminal.
+You must install dependencies for application to be functional.To open the application and explore locally, type "npm run develop" into the terminal.
 
+Deployed at https://boiling-stream-54263.herokuapp.com/
 
-![](./assets/images/navigation.png)
+When user is not logged in, save buttons don't appear.
+![not Logged in](./assets/images/noLogin.png)
 
-![Employee Table](./assets/images/empTable.png)
+![no buttons](./assets/images/noButton.png)
 
-![Add New Employee](./assets/images/newEmp.png)
+Login model
+![Login screen](./assets/images/login.png)
+
+When user is logged in, save buttons appear - And user can view their saved Books and delete saves as well.
+![add Button appears](./assets/images/addButton.png)
+
+![saved Books](./assets/images/savedBooks.png)
+
+![delete button](./assets/images/deleteButton.png)
+
+![book deleted](./assets/images/deleteBook.png)
 
 ---
 ---
