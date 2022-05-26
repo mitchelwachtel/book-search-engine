@@ -37,38 +37,33 @@ const resolvers = {
     },
     saveBook: async (
       parent,
-      {userId, authors, description, bookId, image, link, title},
+      {userId, authors, description, bookId, image, link, title}
     ) => {
-
-        return User.findOneAndUpdate(
-          {_id: userId},
-          {
-            $addToSet: {
-              savedBooks: {authors, description, bookId, image, link, title},
-            },
+      return User.findOneAndUpdate(
+        {_id: userId},
+        {
+          $addToSet: {
+            savedBooks: {authors, description, bookId, image, link, title},
           },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-  
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
     },
-    removeBook: async (parent, {userId, bookId}, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
-          {_id: userId},
-          {
-            $pull: {
-              savedBooks: {
-                _id: bookId,
-              },
+    removeBook: async (parent, {userId, bookId}) => {
+      return User.findOneAndUpdate(
+        {_id: userId},
+        {
+          $pull: {
+            savedBooks: {
+              bookId: bookId,
             },
           },
-          {new: true}
-        );
-      }
-      throw new AuthenticationError("You need to be logged in!");
+        },
+        {new: true}
+      );
     },
   },
 };
