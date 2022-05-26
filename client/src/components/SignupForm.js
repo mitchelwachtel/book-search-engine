@@ -13,6 +13,9 @@ const SignupForm = () => {
     email: "",
     password: "",
   });
+
+  const [addUser, { error, data }] = useMutation(ADD_USER);
+
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
@@ -23,34 +26,36 @@ const SignupForm = () => {
     setUserFormData({...userFormData, [name]: value});
   };
 
-  const [addUser, {error}] = useMutation(ADD_USER);
+  
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
 
     try {
-      const response = await addUser({
+      console.log(userFormData.username)
+      const {data} = await addUser({
+        
         variables: {
           username: userFormData.username,
           email: userFormData.email,
           password: userFormData.password,
         },
       });
+      console.log(data)
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
+      // if (!data.ok) {
+      //   throw new Error("something went wrong!");
+      // }
 
-      const {token, user} = await response.json();
-      console.log(user);
-      Auth.login(token);
+
+      Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);

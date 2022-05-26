@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {Jumbotron, Container, CardColumns, Card, Button} from "react-bootstrap";
 import {useQuery, useMutation} from "@apollo/client";
 import {QUERY_ME} from "../utils/queries";
@@ -8,9 +8,12 @@ import Auth from "../utils/auth";
 import {removeBookId} from "../utils/localStorage";
 
 const SavedBooks = () => {
-  const [userData, setUserData] = useState({});
-
-  setUserData(useQuery(QUERY_ME));
+  const profileData = Auth.getProfile();
+  const userId = profileData.data._id;
+  console.log(userId);
+  const bigData = useQuery(QUERY_ME, {variables: {userId: userId}});
+const data = bigData.data.user
+  console.log(data);
 
   const [removeBook, {error}] = useMutation(REMOVE_BOOK);
 
@@ -31,8 +34,6 @@ const SavedBooks = () => {
         throw new Error("something went wrong!");
       }
 
-      const updatedUser = await response.json();
-      setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
@@ -41,7 +42,7 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userData.length) {
+  if (!data.length) {
     return <h2>LOADING...</h2>;
   }
 
@@ -54,14 +55,14 @@ const SavedBooks = () => {
       </Jumbotron>
       <Container>
         <h2>
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${
-                userData.savedBooks.length === 1 ? "book" : "books"
+          {data.savedBooks.length
+            ? `Viewing ${data.savedBooks.length} saved ${
+                data.savedBooks.length === 1 ? "book" : "books"
               }:`
             : "You have no saved books!"}
         </h2>
         <CardColumns>
-          {userData.savedBooks.map((book) => {
+          {data.savedBooks.map((book) => {
             return (
               <Card key={book.bookId} border="dark">
                 {book.image ? (
